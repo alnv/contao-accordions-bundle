@@ -3,22 +3,20 @@
 namespace Alnv\ContaoAccordionsBundle\Elements;
 
 
-class ContentAccordionStart extends \ContentElement {
+class ContentAccordionStart extends \ContentAccordionStart {
 
 
     protected $strTemplate = 'ce_accordionStart';
 
 
-    protected function compile() {
-
-        if (TL_MODE == 'BE') {
-
-            $this->strTemplate = 'be_wildcard';
-            $this->Template = new \BackendTemplate($this->strTemplate);
-            $this->Template->title = $this->mooHeadline;
-        }
+    public function generate() {
 
         $arrHeadline = \StringUtil::deserialize( $this->mooHeadline, true );
+
+        if ( TL_MODE == 'BE' ) {
+
+            return isset( $arrHeadline['value'] ) ? $arrHeadline['value'] : $arrHeadline;
+        }
 
         if ( !isset( $arrHeadline['unit'] ) ) {
 
@@ -28,10 +26,8 @@ class ContentAccordionStart extends \ContentElement {
             ];
         }
 
-        $classes = \StringUtil::deserialize( $this->mooClasses );
-        $this->Template->toggler = $classes[0] ?: 'toggler';
-        $this->Template->accordion = $classes[1] ?: 'accordion';
-        $this->Template->headlineStyle = $this->mooStyle;
-        $this->Template->headline = $arrHeadline;
+        $this->mooHeadline = $arrHeadline;
+
+        return parent::generate();
     }
 }
