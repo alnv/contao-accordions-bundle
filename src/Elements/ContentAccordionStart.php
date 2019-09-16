@@ -15,7 +15,17 @@ class ContentAccordionStart extends \ContentAccordionStart {
 
         if ( TL_MODE == 'BE' ) {
 
-            return isset( $arrHeadline['value'] ) ? $arrHeadline['value'] : $arrHeadline;
+            if ( is_array( $arrHeadline ) && isset( $arrHeadline[0] ) ) {
+
+                return $arrHeadline[0];
+            }
+
+            if ( is_array( $arrHeadline ) && isset( $arrHeadline['value'] ) ) {
+
+                return $arrHeadline['value'];
+            }
+
+            return '';
         }
 
         if ( !isset( $arrHeadline['unit'] ) ) {
