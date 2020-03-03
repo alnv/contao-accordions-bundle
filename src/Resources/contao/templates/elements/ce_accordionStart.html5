@@ -1,9 +1,37 @@
-
+<?php if ($this->question && $this->isQuestion): ?>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "QAPage",
+    "mainEntity": {
+        "@type": "Question",
+        "name": "<?= $this->name ?>",
+        "text": "<?= $this->question ?>",
+        "dateCreated": "<?= date('c', $this->tstamp) ?>",
+        "upvoteCount": 10,
+        "answerCount": 1,
+        "author": {
+            "@type": "Person",
+            "name": "anonymous"
+        },
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "<?= $this->answer ?>",
+            "dateCreated": "<?= date( 'c', $this->tstamp + 83444 ) ?>",
+            "upvoteCount": 10,
+            "author": {
+                "@type": "Person",
+                "name": "{{author}}"
+            },
+            "url": "<?= \Environment::get('uri') ?>"
+        }
+    }
+}
+<?php endif; ?>
+</script>
 <section class="<?= $this->class ?> ce_accordion block"<?= $this->cssID ?><?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?>>
-
     <div class="<?= $this->toggler ?>"<?php if ($this->headlineStyle): ?> style="<?= $this->headlineStyle ?>"<?php endif; ?>>
-        <<?= $this->headline['unit'] ?>><?= $this->headline['value'] ?><?php if ( $this->subheadline ): // optional ?><span class="subheadline"><?= $this->subheadline ?></span><?php endif;?></<?= $this->headline['unit'] ?>>
+        <<?= $this->headline['unit'] ?>><?= $this->headline['value'] ?><?php if ( $this->subheadline ): ?><span class="subheadline"><?= $this->subheadline ?></span><?php endif;?></<?= $this->headline['unit'] ?>>
     </div>
-
     <div class="<?= $this->accordion ?>">
         <div>

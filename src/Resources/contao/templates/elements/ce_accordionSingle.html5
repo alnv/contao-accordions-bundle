@@ -1,24 +1,53 @@
-
 <section class="<?= $this->class ?> ce_accordion ce_text block"<?= $this->cssID ?><?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?>>
-
     <div class="<?= $this->toggler ?>"<?php if ($this->headlineStyle): ?> style="<?= $this->headlineStyle ?>"<?php endif; ?>>
         <<?= $this->headline['unit'] ?>><?= $this->headline['value'] ?></<?= $this->headline['unit'] ?>>
     </div>
-
     <div class="<?= $this->accordion ?>">
         <div>
             <?php if (!$this->addBefore): ?>
                 <?= $this->text ?>
             <?php endif; ?>
-
             <?php if ($this->addImage): ?>
                 <?php $this->insert('image', $this->arrData); ?>
             <?php endif; ?>
-
             <?php if ($this->addBefore): ?>
                 <?= $this->text ?>
             <?php endif; ?>
         </div>
     </div>
-
+        <?php
+        global $objPage;
+        $strQuestion = htmlspecialchars_decode(trim(strip_tags($this->headline['value'])));
+        ?>
+    <?php if ($strQuestion && strpos($strQuestion,'?') !== false): ?>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "QAPage",
+            "mainEntity": {
+                "@type": "Question",
+                "name": "<?= $objPage->pageTitle ?>",
+                "text": "<?= htmlspecialchars_decode(trim(strip_tags($this->headline['value']))) ?>",
+                "dateCreated": "<?= date('c', $this->tstamp) ?>",
+                "upvoteCount": 10,
+                "answerCount": 1,
+                "author": {
+                    "@type": "Person",
+                    "name": "anonymous"
+                },
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "<?= htmlspecialchars_decode(trim(strip_tags($this->text))) ?>",
+                    "dateCreated": "<?= date('c', $this->tstamp + 83444) ?>",
+                    "upvoteCount": 10,
+                    "author": {
+                        "@type": "Person",
+                        "name": "{{author}}"
+                    },
+                    "url": "<?= \Environment::get('uri') ?>"
+                }
+            }
+        }
+    </script>
+    <?php endif; ?>
 </section>
