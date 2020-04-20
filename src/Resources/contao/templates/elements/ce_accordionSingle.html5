@@ -15,39 +15,4 @@
             <?php endif; ?>
         </div>
     </div>
-        <?php
-        global $objPage;
-        $strQuestion = htmlspecialchars_decode(trim(strip_tags($this->headline['value'])));
-        ?>
-    <?php if ($strQuestion && strpos($strQuestion,'?') !== false): ?>
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "QAPage",
-            "mainEntity": {
-                "@type": "Question",
-                "name": "<?= $objPage->pageTitle ?>",
-                "text": "<?= htmlspecialchars_decode(trim(strip_tags($this->headline['value']))) ?>",
-                "dateCreated": "<?= date('c', $this->tstamp) ?>",
-                "upvoteCount": 10,
-                "answerCount": 1,
-                "author": {
-                    "@type": "Person",
-                    "name": "anonymous"
-                },
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "<?= htmlspecialchars_decode(trim(strip_tags($this->text))) ?>",
-                    "dateCreated": "<?= date('c', $this->tstamp + 83444) ?>",
-                    "upvoteCount": 10,
-                    "author": {
-                        "@type": "Person",
-                        "name": "{{author}}"
-                    },
-                    "url": "<?= \Environment::get('uri') ?>"
-                }
-            }
-        }
-    </script>
-    <?php endif; ?>
 </section>
