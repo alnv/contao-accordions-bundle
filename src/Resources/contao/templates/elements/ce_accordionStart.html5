@@ -5,7 +5,7 @@ global $objPage;
 $strContent = '';
 $objStartElement = \ContentModel::findByPk($this->id);
 
-if ($objStartElement && !$this->noFAQMarkup) {
+if ($objStartElement && $this->isFAQMarkup) {
     $objArticle = \ArticleModel::findByPk($objStartElement->pid);
     if ($objArticle) {
         $strTable = $_GET['auto_item'] ? 'cm_advisor' : 'tl_article';
@@ -26,7 +26,6 @@ if ($objStartElement && !$this->noFAQMarkup) {
                     $blnStart = false;
                 }
             }
-
         }
     }
 }

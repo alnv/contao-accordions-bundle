@@ -19,7 +19,8 @@
 
 <?php
 
-if (!$this->noFAQMarkup) {
+if ($this->isFAQMarkup) {
+
     $strQuestion = strip_tags($this->headline['value']);
     $strQuestion = str_replace(["\r", "\n"], '', $strQuestion);
     $strAnswer = strip_tags($this->text);

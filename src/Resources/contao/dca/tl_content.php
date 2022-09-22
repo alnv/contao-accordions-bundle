@@ -9,14 +9,14 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['mooHeadline']['options'] = [ 'h1', '
 $GLOBALS['TL_DCA']['tl_content']['fields']['mooHeadline']['sql'] = "text NOT NULL";
 
 \Contao\CoreBundle\DataContainer\PaletteManipulator::create()
-    ->addField('noFAQMarkup', 'mooHeadline')
+    ->addField('isFAQMarkup', 'mooHeadline')
     ->applyToPalette('accordionStart', 'tl_content');
 
 \Contao\CoreBundle\DataContainer\PaletteManipulator::create()
-    ->addField('noFAQMarkup', 'mooHeadline')
+    ->addField('isFAQMarkup', 'mooHeadline')
     ->applyToPalette('accordionSingle', 'tl_content');
 
-$GLOBALS['TL_DCA']['tl_content']['fields']['noFAQMarkup'] = [
+$GLOBALS['TL_DCA']['tl_content']['fields']['isFAQMarkup'] = [
     'label' => ['Diesen Inhalt nicht in die FAQPage aufnehmen', ''],
     'inputType' => 'checkbox',
     'eval' => [
