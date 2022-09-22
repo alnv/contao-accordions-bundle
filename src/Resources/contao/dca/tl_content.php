@@ -17,7 +17,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['mooHeadline']['sql'] = "text NOT NUL
     ->applyToPalette('accordionSingle', 'tl_content');
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['isFAQMarkup'] = [
-    'label' => ['Diesen Inhalt nicht in die FAQPage aufnehmen', ''],
+    'label' => ['Diesen Inhalt in die FAQPage aufnehmen', ''],
     'inputType' => 'checkbox',
     'eval' => [
         'tl_class' => 'm12 w50'
