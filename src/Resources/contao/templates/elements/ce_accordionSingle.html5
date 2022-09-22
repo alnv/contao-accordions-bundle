@@ -16,3 +16,25 @@
         </div>
     </div>
 </section>
+
+<?php
+
+if (!$this->noFAQMarkup) {
+    $strQuestion = strip_tags($this->headline['value']);
+    $strQuestion = str_replace(["\r", "\n"], '', $strQuestion);
+    $strAnswer = strip_tags($this->text);
+    $strAnswer = trim($strAnswer);
+    $strAnswer = str_replace(["\r", "\n"], '', $strAnswer);
+
+    if ($strQuestion && $strAnswer) {
+        if (isset($GLOBALS['TL_JSON_LT']) && !isset($GLOBALS['TL_JSON_LT']['FaqPage'])) {
+            $GLOBALS['TL_JSON_LT']['FaqPage'] = [];
+        }
+        $GLOBALS['TL_JSON_LT']['FaqPage'][] = [
+            'question' => $strQuestion,
+            'answer' => $strAnswer
+        ];
+    }
+}
+
+?>

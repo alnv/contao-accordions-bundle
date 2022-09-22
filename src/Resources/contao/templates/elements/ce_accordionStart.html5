@@ -1,3 +1,56 @@
+<?php
+
+global $objPage;
+
+$strContent = '';
+$objStartElement = \ContentModel::findByPk($this->id);
+
+if ($objStartElement && !$this->noFAQMarkup) {
+    $objArticle = \ArticleModel::findByPk($objStartElement->pid);
+    if ($objArticle) {
+        $strTable = $_GET['auto_item'] ? 'cm_advisor' : 'tl_article';
+        $objContent = \ContentModel::findPublishedByPidAndTable($objArticle->id, $strTable, [
+            'order' => 'sorting ASC'
+        ]);
+        if ($objContent) {
+            $blnStart = false;
+            while ($objContent->next()) {
+                if ($objContent->id == $objStartElement->id) {
+                    $blnStart = true;
+                    continue;
+                }
+                if ($blnStart) {
+                    $strContent .= \Controller::getContentElement($objContent->id);
+                }
+                if ($objContent->type == 'accordionStop') {
+                    $blnStart = false;
+                }
+            }
+
+        }
+    }
+}
+
+if ($strContent) {
+
+    $strQuestion = strip_tags($this->headline['value']);
+    $strQuestion = str_replace(["\r", "\n"], '', $strQuestion);
+    $strAnswer = strip_tags($strContent);
+    $strAnswer = trim($strAnswer);
+    $strAnswer = str_replace(["\r", "\n"], '', $strAnswer);
+
+    if ($strQuestion && $strAnswer) {
+        if (isset($GLOBALS['TL_JSON_LT']) && !isset($GLOBALS['TL_JSON_LT']['FaqPage'])) {
+            $GLOBALS['TL_JSON_LT']['FaqPage'] = [];
+        }
+        $GLOBALS['TL_JSON_LT']['FaqPage'][] = [
+            'question' => $strQuestion,
+            'answer' => $strAnswer
+        ];
+    }
+}
+
+?>
 <section class="<?= $this->class ?> ce_accordion block"<?= $this->cssID ?><?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?>>
     <div class="<?= $this->toggler ?>"<?php if ($this->headlineStyle): ?> style="<?= $this->headlineStyle ?>"<?php endif; ?>>
         <<?= $this->headline['unit'] ?>><?= $this->headline['value'] ?><?php if ( $this->subheadline ): ?><span class="subheadline"><?= $this->subheadline ?></span><?php endif;?></<?= $this->headline['unit'] ?>>
