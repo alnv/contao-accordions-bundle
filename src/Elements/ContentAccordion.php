@@ -8,26 +8,27 @@ class ContentAccordion extends \ContentAccordion {
 
     public function generate() {
 
-        $arrHeadline = \StringUtil::deserialize( $this->mooHeadline, true );
+        $arrHeadline = \StringUtil::deserialize($this->mooHeadline, true);
 
-        if ( TL_MODE == 'BE' ) {
-            if ( is_array( $arrHeadline ) && isset( $arrHeadline[0] ) ) {
+        if (TL_MODE == 'BE') {
+            if (is_array($arrHeadline) && isset($arrHeadline[0])) {
                 return $arrHeadline[0];
             }
-            if ( is_array( $arrHeadline ) && isset( $arrHeadline['value'] ) ) {
+            if (is_array($arrHeadline) && isset($arrHeadline['value'])) {
                 return $arrHeadline['value'];
             }
             return '';
         }
 
-        if ( !isset( $arrHeadline['unit'] ) ) {
+        if (!isset($arrHeadline['unit'])) {
             $arrHeadline = [
-                'unit' => 'h3',
+                'unit' => 'span',
                 'value' => $arrHeadline[0]
             ];
         }
 
         $this->mooHeadline = $arrHeadline;
+        
         return parent::generate();
     }
 }
